@@ -1,21 +1,25 @@
-GCCFLAGS = -g -Wall -Wextra -O3 #-ansi -pedantic -std=c11
+GCCFLAGS = -Wall -Wextra -O3 #-std=c++17 #-ansi -pedantic -std=c11 -g
 EXEC = main 
+LIBS = cantstop dicey ai play monte
+OLIBS=$(patsubst %,%.o,$(LIBS))
+HLIBS=$(patsubst %,%.h,$(LIBS))
+CC = g++
 
 all: $(EXEC)
 
 #EXEC = % with this, so %.o works
-$(EXEC) : % : %.o
-	g++ $(GCCFLAGS) -o $@ $^
+$(EXEC) : % : $(OLIBS) %.o 
+	$(CC) $(GCCFLAGS) -o $@ $^
 
-%.o: %.cpp
-	g++ $(GCCFLAGS) -c $^
+# needed otherwise a built in rule (and deps?...) is called that
+# is not triggered by cantstop.h change
+main.o : main.cpp $(HLIBS)
+	$(CC) $(GCCFLAGS) -c $<
 
-stat: $(EXEC)
-	valgrind --tool=callgrind ./$(EXEC)
+%.o: %.cpp %.h $(HLIBS)
+	$(CC) $(GCCFLAGS) -c $<
 
-#kcachegrind callgrind...
-
-
+.PHONY: clean
 clean:
-	-rm $(EXEC)
-	-rm *.o
+	-rm -f *.o
+	-rm -f *.gch

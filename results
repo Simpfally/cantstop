@@ -1,0 +1,22 @@
+stupid monte carlo 10 000 playouts :
+71.1111 % winrate of player 0 (against cantstop)
+In 861.306s (45 games)
+19.1s per game
+
+New :
+
+stupid MT 500 playout 1000games :
+38.6 % winrate of player 0
+In 180.147s
+
+UCT MT 500 playout 1000 games :
+42.6 % winrate of player 0
+In 181.269s
+
+UCT MT 10 000 Playout vs cantstop, 100 games :
+64 % winrate of player 0
+In 398.879s
+
+UCT MT 50 000 Playout vs cantstop, 100 games :
+73 % winrate of player 0
+In 1843.21s : 18s per game
